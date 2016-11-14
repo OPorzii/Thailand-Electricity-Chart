@@ -1,0 +1,1 @@
+# Thailand-Electricity-chart
