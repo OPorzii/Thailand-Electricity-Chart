@@ -1,25 +1,30 @@
+import os
 import urllib
 import urllib.request
-import os
 from bs4 import BeautifulSoup
 
-theurl = 'http://service.nso.go.th/nso/web/statseries/statseries18.html'
-thepage = urllib.request.urlopen(theurl)
-soup = BeautifulSoup(thepage, "html.parser")
+# Setting URL WebPage
+url = 'http://service.nso.go.th/nso/web/statseries/'
 
+page = urllib.request.urlopen(url+'statseries18.html')
+soup = BeautifulSoup(page, "html.parser")
 web_nav = soup.findAll('ul', {"class":"topnav"})[1]
-con = {0:"ภาคกลาง", 1:"ภาคเหนือ"}
-for x in con:
+
+# Names Region Thailand from weburl
+region = {0:"ภาคกลาง", 1:"ภาคเหนือ"}
+
+# Start Loop for Downloading Xls File
+for x in region:
     d = web_nav.findAll('ul')[x]
-    data = {}
-    for i in d.findAll('a'):
-        data[i.text] = 'http://service.nso.go.th/nso/web/statseries/'+i.get('href')
-    print("กำลังโหลดข้อมูล: "+con[x])
-    if not os.path.exists("./_RowData/"+con[x]):
-        os.makedirs("./_RowData/"+con[x])
+    data = {i.text:url+i.get('href') for i in d.findAll('a')}
+    print("--- > กำลังโหลดข้อมูลของ: "+region[x])
+    if not os.path.exists("./_RowData/"+region[x]):
+        os.makedirs("./_RowData/"+region[x])
+    print("Downloading..  ")
     for i in data:
-        print("Downloading..  "+i, end='')
-        urllib.request.urlretrieve(data[i], "./_RowData/"+con[x]+"/"+i+".xls")
+        print(i, end=' ')
+        urllib.request.urlretrieve(data[i], "./_RowData/"+region[x]+"/"+i+".xls")
         print("\tSuccess!!")
 
-print("Download Complete")
+# Complete
+print("===========All Download Complete")
