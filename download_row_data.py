@@ -24,7 +24,7 @@ for x in region:
     print("Downloading..  ")
     for i in data:
         # fix edit bad name this provice on nso web
-        save = "ประจวบคีรีขันธ์" if i == "ประจวบคีรีขันธุ์" else i
+        save = "ประจวบคีรีขันธ์" if i == "ประจวบคีรีขันธุ์" else i.strip()
         print(i, end=' ')
         urllib.request.urlretrieve(data[i], "./rows_data/"+region[x]+"/"+save+".xls")
         print("\tSuccess!!")
