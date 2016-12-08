@@ -6,7 +6,8 @@ name_y = ['บ้านอยู่อาศัย', 'กิจการขน�
 out_path = "./chart_f/"
 mydir = "./data_csv/"
 
-def data_prot(filename):  
+def data_prot(filename):
+    """prot chart from input csv file"""
     with open(mydir+filename) as fp:
         reader = csv.DictReader(fp)
         num = [i for i in (reader.fieldnames)]
@@ -28,7 +29,7 @@ def data_prot(filename):
         chart_2.render_to_file(out_path+filename[:-4]+'_chart_2.svg')
         print("\tSuccess!")
 
-
+# Create New Directory
 if not os.path.exists(out_path):
     os.makedirs(out_path)
 # Loop for run list filenames in dir
@@ -37,12 +38,12 @@ for file in os.listdir(mydir):
         print("Opening.. "+file, end='')
         data_prot(file)
 
+# --------------------- Conclude Chart Prot ---------------------------
 
-
+# Chart all average provice in Thailand use
 with open(mydir+'conclude/all_avg.csv') as fp:
     reader = csv.DictReader(fp)
     num = [i for i in (reader.fieldnames)]
-
     chart_avg = pygal.StackedLine(fill=True, interpolate='cubic', style=chart_style2, show_legend=False)
     chart_avg.value_formatter = lambda x: "%gM" %(x/(10**6))
     chart_avg.x_labels = num
@@ -62,6 +63,7 @@ with open(mydir+'conclude/all_avg.csv') as fp:
     chart_avg2.render_to_file(out_path+'sub_avg_chart.svg')
     print("Chart_All_Type_Average Success!")
 
+# Chart Top10 Rank all average and business use
 with open(mydir+'conclude/top10_avg.csv') as fp:
     reader = csv.DictReader(fp)
     num = [i for i in (reader.fieldnames)]
@@ -86,6 +88,7 @@ with open(mydir+'conclude/top10_avg.csv') as fp:
     chart2_top10.render_to_file(out_path+'rank_chart_business.svg')
     print("Chart_Rank_Business Success!")
 
+# Chart Increased rates by region
 with open(mydir+'conclude/region_up_avg.csv') as fp:
     reader = csv.DictReader(fp)
     rname = ['ภาคกลาง', 'ภาคตะวันออก', 'ภาคตะวันออกเฉียงเหนือ', 'ภาคใต้', 'ภาคตะวันตก', 'ภาคเหนือ']

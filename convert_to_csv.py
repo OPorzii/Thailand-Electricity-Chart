@@ -9,6 +9,7 @@ data_all = {}
 region_per = {key:{'first':[], 'last':[]} for key in ['region_central', 'region_north',\
  'region_northeast', 'region_east', 'region_west', 'region_south']}
 
+# Create New Directory
 if not os.path.exists(out_path):
     os.makedirs(out_path+'conclude')
 
@@ -38,8 +39,10 @@ for x in region_folder:
             convert_xls_to_csv(file)
             print("Convert-> "+file)
 
-# Success Convert
+# Success Provice Files Convert
 print("============ All Converted Complete")
+
+# -------------------------------- Conclude Data Convert ----------------------------------
 
 avg = {name:{key:[data_all[i][name][key] for i in data_all if key in data_all[i][name]]\
         for key in num_year} for name in names_data}
@@ -63,6 +66,8 @@ for keyn in data_all:
 region_per = {n:((sum(region_per[n]['last'])-sum(region_per[n]['first']))*100)/sum(region_per[n]['first'])\
              for n in region_per}
 
+# -------------------------------- Save Data To Files ----------------------
+# Convert Data of All average
 with open(out_path+'conclude/all_avg.csv', 'w', newline='') as fp:
         fieldnames = num_year
         writer = csv.DictWriter(fp, fieldnames=fieldnames)
@@ -70,6 +75,8 @@ with open(out_path+'conclude/all_avg.csv', 'w', newline='') as fp:
         for i in range(5):
             writer.writerow({y:avg[names_data[i]][y] for y in avg[names_data[i]]})
         print("All Average Created!")
+
+# Convert Data of Top10 Rank
 with open(out_path+'conclude/top10_avg.csv', 'w', newline='') as fp:
         fieldnames = [i for i in range(1, 11)]
         writer = csv.DictWriter(fp, fieldnames=fieldnames)
@@ -79,6 +86,8 @@ with open(out_path+'conclude/top10_avg.csv', 'w', newline='') as fp:
         writer.writerow({i:top_business[i-1] for i in range(1, 11)})
         writer.writerow({i:top_10['business'][top_business[i-1]] for i in range(1, 11)})
         print("Top10 Rank Created!")
+
+# Convert Data of Increased rates by region
 with open(out_path+'conclude/region_up_avg.csv', 'w', newline='') as fp:
         fieldnames = [convert_to_th(i) for i in region_per]
         writer = csv.DictWriter(fp, fieldnames=fieldnames)
