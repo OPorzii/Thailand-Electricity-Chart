@@ -7,6 +7,7 @@ region_west = ['TH-71', 'TH-63', 'TH-77', 'TH-76', 'TH-70']
 region_south = ['TH-81', 'TH-86', 'TH-92', 'TH-80', 'TH-96', 'TH-94', 'TH-82', 'TH-93', 'TH-83', 'TH-95', 'TH-85', 'TH-90', 'TH-91', 'TH-84']
 
 def check_region(name):
+    """check iso3166-2 and return region in thailand"""
     check = [c for c, n in province_name_th.items() if n == name].pop()
     return ("region_central" if check in region_central else
             "region_north" if check in region_north else
@@ -16,12 +17,10 @@ def check_region(name):
             "region_south")
 
 def convert_to_th(name):
-	return ("ภาคกลาง" if name == 'region_central' else
-				"ภาคเหนือ" if name == 'region_north' else
-				"ภาคตะวันออกเฉียงเหนือ" if name == 'region_northeast' else
-				"ภาคตะวันออก" if name == 'region_east' else
-				"ภาคตะวันตก" if name == 'region_west' else
-				"ภาคใต้")
-
-
-
+    """Convert name region thailand eng to thai"""
+    return ("ภาคกลาง" if name == 'region_central' else
+                "ภาคเหนือ" if name == 'region_north' else
+                "ภาคตะวันออกเฉียงเหนือ" if name == 'region_northeast' else
+                "ภาคตะวันออก" if name == 'region_east' else
+                "ภาคตะวันตก" if name == 'region_west' else
+                "ภาคใต้")
