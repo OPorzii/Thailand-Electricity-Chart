@@ -1,6 +1,7 @@
 import pygal, csv, os
 from pygal.style import RotateStyle
-dark_rotate_style = RotateStyle('#E86FA0')
+chart_style1 = RotateStyle('#E86FA0')
+chart_style2 = RotateStyle('#81CFE0')
 name_y = ['บ้านอยู่อาศัย', 'กิจการขนาดเล็ก', 'กิจการขนาดกลาง', 'กิจการขนาดใหญ่', 'อื่นๆ']
 out_path = "./chart_f/"
 mydir = "./data_csv/"
@@ -10,7 +11,7 @@ def data_prot(filename):
         reader = csv.DictReader(fp)
         num = [i for i in (reader.fieldnames)]
 
-        chart_1 = pygal.StackedLine(fill=True, interpolate='cubic', style=dark_rotate_style, show_legend=False)
+        chart_1 = pygal.StackedLine(fill=True, interpolate='cubic', style=chart_style1, show_legend=False)
         chart_1.value_formatter = lambda x: "%gM" %(x/(10**6))
         chart_1.x_labels = num
         data = next(reader)
@@ -42,7 +43,7 @@ with open(mydir+'conclude/all_avg.csv') as fp:
     reader = csv.DictReader(fp)
     num = [i for i in (reader.fieldnames)]
 
-    chart_avg = pygal.StackedLine(fill=True, interpolate='cubic', style=dark_rotate_style, show_legend=False)
+    chart_avg = pygal.StackedLine(fill=True, interpolate='cubic', style=chart_style2, show_legend=False)
     chart_avg.value_formatter = lambda x: "%gM" %(x/(10**6))
     chart_avg.x_labels = num
     data = next(reader)
